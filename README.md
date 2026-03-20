@@ -21,7 +21,7 @@
 
 ---
 
-##Descripción General
+## Descripción General
 
 La aplicación **Magistral CFDI** automatiza el proceso de autenticación, solicitud de descarga y verificación del estado de la solicitud de Comprobantes Fiscales Digitales por Internet (CFDI) desde el Servicio de Administración Tributaria (SAT) de México.
 
@@ -34,7 +34,7 @@ La suite cuenta con **dos versiones funcionales** que se mantienen activas para 
 
 ---
 
-##Versiones Disponibles
+## Versiones Disponibles
 
 ### CFDI_Manager 2.0.3 (Clásica)
 -  Interfaz funcional basada en tkinter
