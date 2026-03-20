@@ -64,8 +64,8 @@ pyinstaller==6.11.1
 ## Instalación
 
 ### Ejecutable (Recomendado)
-1. Descargar el ejecutable desde [Releases](https://github.com/cxrlos.black/cfdi-manager/releases)
-2. Extraer el archivo `CFDI_Manager.zip`
+1. Descargar el ejecutable desde [Releases](https://github.com/cxrlosblxck/Descarga_Masiva_de_facturacion_CFDI_SAT/releases)
+2. Extraer el archivo `CFDI_Manager.rar`
 3. Hacer doble clic en `CFDI_Manager.exe`
 
 ---
