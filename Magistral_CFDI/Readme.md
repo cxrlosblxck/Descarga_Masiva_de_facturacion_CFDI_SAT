@@ -149,14 +149,14 @@ TOTAL: ~28 minutos (depende del SAT)
 ```
 
 ### Factores que afectan el tiempo:
-- 📅 **Volumen de datos:** Mayor cantidad de CFDIs = más tiempo
-- 🌐 **Ancho de banda:** Depende de tu conexión
-- ⏰ **Horario:** El SAT puede estar más lento en horas pico
-- 📦 **Número de paquetes:** Cada paquete requiere descarga individual
+-  **Volumen de datos:** Mayor cantidad de CFDIs = más tiempo
+-  **Ancho de banda:** Depende de tu conexión
+-  **Horario:** El SAT puede estar más lento en horas pico
+-  **Número de paquetes:** Cada paquete requiere descarga individual
 
 ---
 
-## 🐛 Solución de Problemas
+##  Solución de Problemas
 
 ### Error: "No module named 'PyQt6'"
 ```bash
@@ -189,7 +189,7 @@ pip install PyQt6
 - En el ejecutable, verificar que se incluyó con `--add-data`
 
 ---
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 magistral-cfdi/
@@ -235,7 +235,7 @@ SOFTWARE.
 **Carlos Black**
 
 - 📧 Email: taveramonroy04@gmail.com
-- 🐛 Issues: [GitHub Issues](https://github.com/tuusuario/magistral-cfdi/issues)
+-  Issues: [GitHub Issues](https://github.com/tuusuario/magistral-cfdi/issues)
 
 ---
 
