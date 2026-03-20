@@ -141,8 +141,7 @@ cfdi-manager/
 
 MIT License
 
-Copyright (c) 2026 RAVEN DEVELOPERS BY GRUPO AISA
-
+Copyright (c) Carlos Black
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -179,4 +178,3 @@ Si este proyecto te ha sido de ayuda, no olvides darle una **estrella** en GitHu
 ---
 
 **CFDI_Manager 2.0.3**
-```
