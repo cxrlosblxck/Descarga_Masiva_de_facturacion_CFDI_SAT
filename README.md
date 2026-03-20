@@ -1,183 +1,178 @@
-# cfdi-descarga-masiva-de-xml
- La aplicación automatiza el proceso de autenticación, solicitud de descarga y verificación del estado de la solicitud, permitiendo al usuario descargar los CFDI emitidos o recibidos en un rango de fechas específico.
+#Magistral CFDI - Descarga Masiva de XML del SAT
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/Version-3.0.0-red.svg)]()
+
+**Desarrollado por Carlos Black**
+
+---
+
+## Tabla de Contenido:
+- [Descripción General](#descripción-general)
+- [Versiones Disponibles](#versiones-disponibles)
+- [Tiempos de Descarga](#tiempos-de-descarga)
+- [Solución de Problemas](#solución-de-problemas)
+- [Crear Ejecutable](#crear-ejecutable)
+- [Guía para Contribuidores](#guía-para-contribuidores)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Licencia](#licencia)
+- [Contacto](#contacto)
 
-## Descripción
+---
 
-Este proyecto es una aplicación de escritorio desarrollada en Python utilizando la librería Tkinter. Está diseñada para facilitar la descarga masiva de Comprobantes Fiscales Digitales por Internet (CFDI) desde el Servicio de Administración Tributaria (SAT) de México. La aplicación automatiza el proceso de autenticación, solicitud de descarga y verificación del estado de la solicitud, permitiendo al usuario descargar los CFDI emitidos o recibidos en un rango de fechas específico.
+##Descripción General
 
+La aplicación **Magistral CFDI** automatiza el proceso de autenticación, solicitud de descarga y verificación del estado de la solicitud de Comprobantes Fiscales Digitales por Internet (CFDI) desde el Servicio de Administración Tributaria (SAT) de México.
 
+La suite cuenta con **dos versiones funcionales** que se mantienen activas para diferentes necesidades:
 
-## Instalación
+| Versión | Framework | Descripción |
+|---------|-----------|-------------|
+| **CFDI_Manager 2.0.3** | tkinter | Versión clásica, ligera y funcional |
+| **Magistral CFDI 3.0.0** | PyQt6 | Versión moderna con interfaz visual mejorada |
 
-Simplemente haga doble clic en el archivo CFDI_Manager.exe (o el nombre del ejecutable) para ejecutar la aplicación
+---
 
+##Versiones Disponibles
 
+### CFDI_Manager 2.0.3 (Clásica)
+-  Interfaz funcional basada en tkinter
+-  Ligera y rápida (~15 MB)
+-  Ideal para equipos con recursos limitados
+-  Mantenimiento activo
 
-## Uso
+### Magistral CFDI 3.0.0 (Moderna)
+-  Interfaz moderna con PyQt6
+-  Imágenes personalizadas
+-  Tabla de resultados visual
+-  Tooltips informativos
+-  Actualización en tiempo real
 
-Para utilizar CFDI Manager, sigue estos pasos:
+---
 
-1.  **RFC del Contribuyente:** Ingresa tu Registro Federal de Contribuyentes (RFC) en el campo correspondiente.
+## Características
 
-2.  **Archivos CER y KEY:**
-    *   Selecciona los archivos `.cer` y `.key` de tu FIEL.
-    *   Utiliza los botones "Examinar" para buscar los archivos en tu computadora.
-    *   **Importante:** Asegúrate de mantener estos archivos en un lugar seguro, ya que son críticos para la autenticación.
+### Ambas versiones:
+-  Descarga de CFDIs **Emitidos** y **Recibidos**
+-  Soporte para **CFDI (XML)** y **Metadata (JSON)**
+-  Filtrado por estado: **Todos**, **Solo Vigentes**, **Solo Cancelados**
+-  Validación automática de **RFC** y **FIEL**
+-  Descarga **paralela** (3 hilos simultáneos)
+-  Sistema de **logging** (`cfdi_downloader.log`)
+-  Manejo de errores con sugerencias inteligentes
+-  Rango de fechas (máximo 1 año)
 
-3.  **Contraseña de la FIEL:** Ingresa la contraseña de tu FIEL.
+### Solo Magistral CFDI 3.0.0:
+-  Tema visual Fusion
+-  Imágenes en botones (Descargar, Cancelar, Limpiar)
+-  Tabla interactiva de resultados
+-  Barra de progreso visual
+-  Tooltips informativos en cada campo
 
-4.  **Carpeta de Descarga:** Selecciona la carpeta donde se guardarán los archivos ZIP con los CFDI descargados.
+---
 
-5.  **Tipo de Descarga:**
-    *   Selecciona "Emitidos" para descargar los CFDI que tú has emitido.
-    *   Selecciona "Recibidos" para descargar los CFDI que has recibido.
+## Requisitos del Sistema
 
-6.  **Rango de Fechas:**
-    *   Ingresa la fecha de inicio y la fecha final del rango de fechas para la descarga.
-    *   El formato debe ser YYYY-MM-DD (Ejemplo: 2023-10-26).
+### Software:
+- Windows 10/11 (64 bits)
+- Python 3.8 o superior (para desarrollo)
+- Conexión estable a Internet
+---
+### Dependencias:
+```txt
+# Para CFDI_Manager 2.0.3
+cfdiclient==1.6.2
+tkcalendar==1.6.1
+pyinstaller==6.11.1
 
-7.  **Iniciar Descarga:** Haz clic en el botón "Ejecutar Descarga" para iniciar el proceso.
+# Para Magistral CFDI 3.0.0
+PyQt6==6.9.1
+cfdiclient==1.6.2
+pyinstaller==6.11.1
+```
+---
+## Guía para Contribuidores:
+¡Gracias por tu interés en contribuir! Tu ayuda es valiosa para mejorar esta herramienta.
 
-8.  **Registro de Procesos:** El área de registro mostrará mensajes sobre el progreso de la descarga y los posibles errores.
+¿Cómo puedo contribuir?
+Reportar errores (Bugs)
+Utiliza el sistema de seguimiento de errores (Issues) de GitHub
 
-9.  **Limpiar:**
-    *   Haz clic en "Limpiar Log" para borrar el registro de procesos.
-    *   Haz clic en "Limpiar Campos" para borrar los campos de entrada.
+## Proporciona:
 
+Título del error: Descriptivo y conciso
 
-# Guía para Contribuidores - Descargador de CFDI
+Descripción detallada: Explica el problema claramente
 
+Pasos para reproducir: Lista los pasos necesarios
 
+Comportamiento esperado vs. real: Describe qué debería pasar
 
-¡Gracias por tu interés en contribuir al proyecto del Descargador de CFDI! Tu ayuda es valiosa para mejorar esta herramienta.
+Información del entorno: Sistema operativo, versión de Python, dependencias
 
+Capturas de pantalla: Si son útiles
 
+Sugerir mejoras (Features)
+Utiliza el sistema de seguimiento de errores (Issues)
 
-## ¿Cómo puedo contribuir?
+Describe claramente la mejora propuesta y su justificación
 
+Contribuir con código
+Fork del repositorio en GitHub
 
+## Desarrollo del código:
 
-Hay varias maneras en las que puedes contribuir:
+Sigue PEP 8 (usa flake8 o pylint)
 
+Documenta tu código usando docstrings
 
+Escribe pruebas unitarias (unittest o pytest)
 
-### Reportar errores (Bugs)
+Commit de los cambios: Mensajes claros y concisos
 
+Push de la rama a tu repositorio fork
 
+Creación de un Pull Request (PR)
 
-* Utiliza el sistema de seguimiento de errores (Issues) de GitHub (si el proyecto está alojado ahí) para reportar bugs. Si no hay un repositorio público, contacta a los mantenedores directamente.
+Revisión del código por los mantenedores
 
-* Por favor, proporciona la siguiente información al reportar un error:
+Merge del PR al repositorio principal
 
+Contribuir con documentación
+Si encuentras errores o quieres agregar información, envía un PR con los cambios
 
-
-* **Título del error:** Descriptivo y conciso.
-
-* **Descripción detallada:** Explica el problema claramente.
-
-* **Pasos para reproducir:** Lista los pasos necesarios para que otros puedan reproducir el error.
-
-* **Comportamiento esperado vs. real:** Describe qué debería pasar y qué está pasando en realidad.
-
-* **Información del entorno:** Sistema operativo, versión de Python, versiones de las dependencias (incluyendo `cfdiclient`).
-
-* **Capturas de pantalla:** Si son útiles para ilustrar el error.
-
-
-
-### Sugerir mejoras (Features)
-
-
-
-* Utiliza el sistema de seguimiento de errores (Issues) de GitHub (o similar) para sugerir nuevas funcionalidades o mejoras.
-
-* Describe claramente la mejora propuesta y su justificación. Explica cómo beneficiaría a los usuarios.
-
-
-
-### Contribuir con código
-
-
-
-1. **Fork del repositorio:** Haz un "fork" del repositorio en GitHub.
-
-
-2. **Desarrollo del código:**
-
-
-
-* **Estilo de código:** Sigue las convenciones de estilo de código de Python (PEP 8). Utiliza un linter como `flake8` o `pylint` para verificar tu código.
-
-* **Documentación:** Documenta tu código usando docstrings. Asegúrate de que las funciones, clases y módulos estén bien documentados.
-
-* **Pruebas:** Escribe pruebas unitarias para tu código. Utiliza el módulo `unittest` o `pytest` de Python. Asegúrate de que las pruebas cubran los casos importantes y que pasen todas las pruebas antes de enviar tu código.
-
-
-
-4. **Commit de los cambios:** Haz commits pequeños y descriptivos. Usa mensajes de commit claros y concisos que expliquen qué has cambiado. (Ejemplo: "Fix: Corregido error de formato de fecha en la descarga").
-
-
-
-5. **Push de la rama:** Sube tu rama a tu repositorio fork.
-
-
-
-6. **Creación de un Pull Request (PR):** Abre un Pull Request (PR) contra la rama principal (`main` o `master`) del repositorio original. Describe los cambios que has realizado en el PR.
-
-
-
-7. **Revisión del código:** Tu código será revisado por los mantenedores del proyecto. Responde a los comentarios y realiza los cambios necesarios.
-
-
-
-8. **Merge del PR:** Una vez que la revisión sea satisfactoria, tu PR será mergeado al repositorio principal.
-
-
-
-### Contribuir con documentación
-
-
-
-* Si encuentras errores en la documentación o quieres agregar información, puedes enviar un PR con los cambios.
-
-
-
-## Licencia
-
+## 📄 Licencia:
 MIT License
 
-
-
-Copyright (c) 2025 Ravens Developers by Grupo AISA
-
-
+Copyright (c) 2026 RAVEN DEVELOPERS BY GRUPO AISA
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-
 of this software and associated documentation files (the "Software"), to deal
-
 in the Software without restriction, including without limitation the rights
-
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-
 copies of the Software, and to permit persons to whom the Software is
-
-furnished to do so, subject to the following conditions:
+## furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
-
 copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+## SOFTWARE.
 
-SOFTWARE.
+📧 Contacto
+Carlos Black
+
+📧 Email: taveramonroy04@gmail.com
+
+🐛 Issues: GitHub Issues
+
+¿Te ha sido útil?
+Si este proyecto te ha sido de ayuda, no olvides darle una estrella en GitHub. ¡Gracias!
+
+¡Disfruta de Magistral CFDI!
