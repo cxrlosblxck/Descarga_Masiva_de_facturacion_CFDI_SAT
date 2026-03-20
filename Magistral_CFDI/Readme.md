@@ -70,7 +70,7 @@ pyinstaller==6.11.1
 ##  Instalación
 
 ### Ejecutable 
-1. Descargar el ejecutable desde [Releases](https://github.com/tuusuario/magistral-cfdi/releases)
+1. Descargar el ejecutable desde [Releases](https://github.com/cxrlosblxck/Descarga_Masiva_de_facturacion_CFDI_SAT/releases/tag/Magistral_CFDI)
 2. Extraer el archivo `Magistral CFDI.zip`
 3. Hacer doble clic en `Magistral CFDI.exe`
 
