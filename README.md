@@ -11,7 +11,6 @@
 ## Tabla de Contenido:
 - [Descripción General](#descripción-general)
 - [Versiones Disponibles](#versiones-disponibles)
-- [Tiempos de Descarga](#tiempos-de-descarga)
 - [Guía para Contribuidores](#guía-para-contribuidores)
 - [Licencia](#licencia)
 - [Contacto](#contacto)
@@ -139,7 +138,7 @@ Merge del PR al repositorio principal
 Contribuir con documentación
 Si encuentras errores o quieres agregar información, envía un PR con los cambios
 
-## 📄 Licencia:
+##  Licencia
 MIT License
 
 Copyright (c) 2026 RAVEN DEVELOPERS BY GRUPO AISA
@@ -162,8 +161,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ## SOFTWARE.
 
-📧 Contacto
-Carlos Black
+## Contacto
 
 📧 Email: taveramonroy04@gmail.com
 
