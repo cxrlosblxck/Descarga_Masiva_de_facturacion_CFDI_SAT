@@ -12,10 +12,7 @@
 - [Descripción General](#descripción-general)
 - [Versiones Disponibles](#versiones-disponibles)
 - [Tiempos de Descarga](#tiempos-de-descarga)
-- [Solución de Problemas](#solución-de-problemas)
-- [Crear Ejecutable](#crear-ejecutable)
 - [Guía para Contribuidores](#guía-para-contribuidores)
-- [Estructura del Proyecto](#estructura-del-proyecto)
 - [Licencia](#licencia)
 - [Contacto](#contacto)
 
