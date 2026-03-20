@@ -16,7 +16,6 @@
 - [Guía de Uso](#guía-de-uso)
 - [Tiempos de Descarga](#tiempos-de-descarga)
 - [Solución de Problemas](#solución-de-problemas)
-- [Crear Ejecutable](#crear-ejecutable)
 - [Estructura del Proyecto](#estructura-del-proyecto)
 - [Licencia](#licencia)
 - [Contacto](#contacto)
