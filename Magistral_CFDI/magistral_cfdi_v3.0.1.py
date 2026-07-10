@@ -82,7 +82,7 @@ class DescargaWorker(QThread):
             format='%(asctime)s - %(levelname)s - %(message)s'
         )
         logging.info("=" * 50)
-        logging.info("INICIANDO NUEVA DESCARGA - MAGISTRAL CFDI 3.0.0")
+        logging.info("INICIANDO NUEVA DESCARGA - MAGISTRAL CFDI 3.0.1")
         logging.info("=" * 50)
 
     def smart_polling_wait(self, attempt_count):
@@ -324,7 +324,7 @@ class DescargaWorker(QThread):
                     if 'timeout' in error_msg.lower():
                         self.progreso.emit(f" Timeout en intento {attempt_count + 1}")
                         attempt_count += 1
-                        MAX_TIMEOUT_RETRIES = 12  # antes 5; el SAT puede tardar en responder
+                        MAX_TIMEOUT_RETRIES = 15  # antes 5; el SAT puede tardar en responder
                         if attempt_count < MAX_TIMEOUT_RETRIES:
                             wait_time = min(30 * attempt_count, 120)
                             self.progreso.emit(f" Reintentando en {wait_time}s... ({attempt_count}/{MAX_TIMEOUT_RETRIES})")
@@ -358,13 +358,13 @@ class DescargaWorker(QThread):
 class MagistralCFDI(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("MAGISTRAL CFDI 3.0.0")
+        self.setWindowTitle("MAGISTRAL CFDI 3.0.1")
         self.setMinimumSize(1300, 750)
         self.cargar_icono()
         self.worker = None
         self.cargar_imagenes()
         self.setup_ui()
-        self.on_tipo_cambiado("Emitidos")
+        self.on_tipo_cambiado(self.tipo_combo.currentText())
 
     def cargar_icono(self):
         try:
@@ -413,7 +413,7 @@ class MagistralCFDI(QMainWindow):
         main_vertical.addLayout(columns_layout)
         self.crear_botones(main_vertical)
 
-        desarrollador_label = QLabel("Carlos Black - MAGISTRAL CFDI 3.0.0")
+        desarrollador_label = QLabel("Carlos Black - MAGISTRAL CFDI 3.0.1")
         desarrollador_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         desarrollador_label.setStyleSheet("""
             QLabel {
@@ -495,7 +495,7 @@ class MagistralCFDI(QMainWindow):
         label_tipo.setStyleSheet("color: white;")
         info_layout.addWidget(label_tipo, 0, 0)
         self.tipo_combo = QComboBox()
-        self.tipo_combo.addItems(["Emitidos", "Recibidos"])
+        self.tipo_combo.addItems(["Seleccione...", "Emitidos", "Recibidos"])
         self.tipo_combo.currentTextChanged.connect(self.on_tipo_cambiado)
         info_layout.addWidget(self.tipo_combo, 0, 1)
 
@@ -503,7 +503,7 @@ class MagistralCFDI(QMainWindow):
         label_formato.setStyleSheet("color: white;")
         info_layout.addWidget(label_formato, 1, 0)
         self.formato_combo = QComboBox()
-        self.formato_combo.addItems(["CFDI (XML)", "Metadata (JSON)"])
+        self.formato_combo.addItems(["Seleccione...", "CFDI (XML)", "Metadata (JSON)"])
         self.formato_combo.currentTextChanged.connect(self.on_formato_cambiado)
         info_layout.addWidget(self.formato_combo, 1, 1)
 
@@ -512,7 +512,8 @@ class MagistralCFDI(QMainWindow):
         info_layout.addWidget(label_estado, 2, 0)
 
         self.estado_combo = QComboBox()
-        self.estado_combo.addItems(["Todos", "Solo Vigentes", "Solo Cancelados"])
+        self.estado_combo.addItems(["Seleccione..."])
+        self.estado_combo.setEnabled(False)
         info_layout.addWidget(self.estado_combo, 2, 1)
 
         label_ubicacion = self._lbl("UBICACIÓN:")
@@ -685,28 +686,37 @@ class MagistralCFDI(QMainWindow):
           Recibidos + CFDI     → Solo Vigentes (SAT no acepta cancelados con CFDI)
           Recibidos + Metadata → Todos / Vigentes / Cancelados  (OK)
         """
+        if not tipo or tipo == "Seleccione..." or not formato or formato == "Seleccione...":
+            self.estado_combo.clear()
+            self.estado_combo.addItems(["Seleccione..."])
+            self.estado_combo.setEnabled(False)
+            self.mensaje_label.setText(" Selecciona tipo y formato para ver los estados disponibles")
+            return
+
         cfdi_format = formato.startswith("CFDI")
 
         if tipo == "Emitidos":
             self.estado_combo.setEnabled(True)
-            # Restaurar opciones completas si fueron limitadas
-            if self.estado_combo.count() != 3:
-                self.estado_combo.clear()
-                self.estado_combo.addItems(["Todos", "Solo Vigentes", "Solo Cancelados"])
+            self.estado_combo.clear()
+            self.estado_combo.addItems(["Seleccione...", "Todos", "Solo Vigentes", "Solo Cancelados"])
+            self.estado_combo.setCurrentIndex(0)
             self.mensaje_label.setText(" EMITIDOS: TODOS LOS ESTADOS DISPONIBLES")
 
         else:  # Recibidos
             if cfdi_format:
-                # Recibidos + CFDI → solo vigentes
-                self.estado_combo.setCurrentText("Solo Vigentes")
+                self.estado_combo.clear()
+                self.estado_combo.addItems(["Solo Vigentes"])
+                self.estado_combo.setCurrentIndex(0)
                 self.estado_combo.setEnabled(False)
                 self.mensaje_label.setText(
                     " RECIBIDOS + CFDI (XML) = SOLO VIGENTES\n"
                     "Para cancelados usa Metadata (JSON)"
                 )
             else:
-                # Recibidos + Metadata → todos los estados
                 self.estado_combo.setEnabled(True)
+                self.estado_combo.clear()
+                self.estado_combo.addItems(["Seleccione...", "Todos", "Solo Vigentes", "Solo Cancelados"])
+                self.estado_combo.setCurrentIndex(0)
                 self.mensaje_label.setText(
                     " RECIBIDOS + METADATA = TODOS LOS ESTADOS\n"
                     "(Vigentes, Cancelados o Todos)"
@@ -728,15 +738,16 @@ class MagistralCFDI(QMainWindow):
         if tipo_descarga == "Emitidos":
             return ESTADO_EMITIDOS.get(estado_texto)
 
-        else:  # Recibidos
-            if formato.startswith("CFDI"):
-                return ESTADO_RECIBIDOS_CFDI.get(estado_texto, "Vigente")
-            else:
-                return ESTADO_RECIBIDOS_METADATA.get(estado_texto, "Todos")
+        if formato.startswith("CFDI"):
+            return ESTADO_RECIBIDOS_CFDI.get(estado_texto, "Vigente")
+        return ESTADO_RECIBIDOS_METADATA.get(estado_texto, "Todos")
 
     def get_tipo_solicitud(self):
         """Devuelve 'CFDI' o 'Metadata' según el combo de formato"""
-        return 'CFDI' if self.formato_combo.currentText().startswith("CFDI") else 'Metadata'
+        formato = self.formato_combo.currentText()
+        if not formato or formato == "Seleccione...":
+            return None
+        return 'CFDI' if formato.startswith("CFDI") else 'Metadata'
 
     # ──────────────────────────── Archivos / carpetas ────────────────────────
 
@@ -764,6 +775,12 @@ class MagistralCFDI(QMainWindow):
             return False
         if not self.password_input.text():
             QMessageBox.warning(self, "Error", "Contraseña es obligatoria")
+            return False
+        if not self.tipo_combo.currentText() or self.tipo_combo.currentText() == "Seleccione...":
+            QMessageBox.warning(self, "Error", "Debe seleccionar el tipo de descarga")
+            return False
+        if not self.formato_combo.currentText() or self.formato_combo.currentText() == "Seleccione...":
+            QMessageBox.warning(self, "Error", "Debe seleccionar el formato")
             return False
         if not self.obtener_ruta_completa(self.cer_input):
             QMessageBox.warning(self, "Error", "Debe seleccionar un archivo CER")
@@ -881,6 +898,7 @@ class MagistralCFDI(QMainWindow):
         self.mensaje_label.setText(" CAMPOS LIMPIADOS")
         for widget in [self.cer_input, self.key_input, self.ubicacion_input]:
             widget.setProperty("ruta_completa", None)
+        self.on_tipo_cambiado(self.tipo_combo.currentText())
 
 
 if __name__ == "__main__":
