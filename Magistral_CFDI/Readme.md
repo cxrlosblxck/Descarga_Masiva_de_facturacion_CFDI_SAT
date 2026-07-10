@@ -1,4 +1,4 @@
-# Magistral CFDI 3.0.0 - Descarga Masiva de XML del SAT
+# Magistral CFDI 3.0.1 - Descarga Masiva de XML del SAT
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -24,7 +24,7 @@
 
 ## Descripción General
 
-**Magistral CFDI 3.0.0** es una aplicación de escritorio desarrollada en Python con la librería PyQt6. Automatiza el proceso de autenticación, solicitud de descarga y verificación del estado de la solicitud de Comprobantes Fiscales Digitales por Internet (CFDI) desde el Servicio de Administración Tributaria (SAT) de México.
+**Magistral CFDI 3.0.1** es una aplicación de escritorio desarrollada en Python con la librería PyQt6. Automatiza el proceso de autenticación, solicitud de descarga y verificación del estado de la solicitud de Comprobantes Fiscales Digitales por Internet (CFDI) desde el Servicio de Administración Tributaria (SAT) de México.
 
 La aplicación permite descargar los CFDI **Emitidos** o **Recibidos** en un rango de fechas específico, con soporte para filtrado por estado y descarga paralela. Esta versión incluye una interfaz moderna con imágenes personalizadas, tabla de resultados y barra de progreso visual.
 
@@ -193,7 +193,7 @@ pip install PyQt6
 ```
 magistral-cfdi/
 │
-├── magistral_cfdi_v3.py
+├── magistral_cfdi_v3.0.1.py
 ├── Img/
 │   ├── Magistral.ico
 │   ├── Descargar.png
@@ -244,4 +244,4 @@ Si este proyecto te ha sido de ayuda, no olvides darle una **estrella** en GitHu
 
 ---
 
-**¡Disfruta de Magistral CFDI 3.0.0!** 
+**¡Disfruta de Magistral CFDI 3.0.1!** 
