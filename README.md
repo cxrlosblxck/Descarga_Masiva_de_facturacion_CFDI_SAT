@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-3.0.0-red.svg)]()
+[![Version](https://img.shields.io/badge/Version-3.0.1-red.svg)]()
 
 **Desarrollado por Carlos Black**
 
@@ -25,20 +25,20 @@ La suite cuenta con **dos versiones funcionales** que se mantienen activas para 
 
 | Versión | Framework | Descripción |
 |---------|-----------|-------------|
-| **CFDI_Manager 2.0.3** | tkinter | Versión clásica, ligera y funcional |
-| **Magistral CFDI 3.0.0** | PyQt6 | Versión moderna con interfaz visual mejorada |
+| **CFDI_Manager 2.0.4** | tkinter | Versión clásica, ligera y funcional |
+| **Magistral CFDI 3.0.1** | PyQt6 | Versión moderna con interfaz visual mejorada |
 
 ---
 
 ## Versiones Disponibles
 
-### CFDI_Manager 2.0.3 (Clásica)
+### CFDI_Manager 2.0.4 (Clásica)
 -  Interfaz funcional basada en tkinter
 -  Ligera y rápida (~15 MB)
 -  Ideal para equipos con recursos limitados
 -  Mantenimiento activo
 
-### Magistral CFDI 3.0.0 (Moderna)
+### Magistral CFDI 3.0.1 (Moderna)
 -  Interfaz moderna con PyQt6
 -  Imágenes personalizadas
 -  Tabla de resultados visual
@@ -59,7 +59,7 @@ La suite cuenta con **dos versiones funcionales** que se mantienen activas para 
 -  Manejo de errores con sugerencias inteligentes
 -  Rango de fechas (máximo 1 año)
 
-### Solo Magistral CFDI 3.0.0:
+### Solo Magistral CFDI 3.0.1:
 -  Tema visual Fusion
 -  Imágenes en botones (Descargar, Cancelar, Limpiar)
 -  Tabla interactiva de resultados
@@ -77,12 +77,12 @@ La suite cuenta con **dos versiones funcionales** que se mantienen activas para 
 ---
 ### Dependencias:
 ```txt
-# Para CFDI_Manager 2.0.3
+# Para CFDI_Manager 2.0.4
 cfdiclient==1.6.2
 tkcalendar==1.6.1
 pyinstaller==6.11.1
 
-# Para Magistral CFDI 3.0.0
+# Para Magistral CFDI 3.0.1
 PyQt6==6.9.1
 cfdiclient==1.6.2
 pyinstaller==6.11.1
