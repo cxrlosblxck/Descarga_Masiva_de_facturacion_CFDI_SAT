@@ -1,5 +1,5 @@
 
-# CFDI_Manager 2.0.3 - Descarga Masiva de XML del SAT
+# CFDI_Manager 2.0.4 - Descarga Masiva de XML del SAT
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -25,7 +25,7 @@
 
 ## Descripción General
 
-**CFDI_Manager 2.0.3** es una aplicación de escritorio desarrollada en Python con la librería Tkinter. Automatiza el proceso de autenticación, solicitud de descarga y verificación del estado de la solicitud de Comprobantes Fiscales Digitales por Internet (CFDI) desde el Servicio de Administración Tributaria (SAT) de México.
+**CFDI_Manager 2.0.4** es una aplicación de escritorio desarrollada en Python con la librería Tkinter. Automatiza el proceso de autenticación, solicitud de descarga y verificación del estado de la solicitud de Comprobantes Fiscales Digitales por Internet (CFDI) desde el Servicio de Administración Tributaria (SAT) de México.
 
 La aplicación permite descargar los CFDI **Emitidos** o **Recibidos** en un rango de fechas específico, con soporte para filtrado por estado y descarga paralela.
 
@@ -131,7 +131,7 @@ TOTAL: ~28 minutos (depende del SAT)
 ```
 cfdi-manager/
 │
-├── CFDI_Manager2.0.3.py
+├── CFDI_Manager2.0.4.py
 ├── icon.ico
 ```
 
