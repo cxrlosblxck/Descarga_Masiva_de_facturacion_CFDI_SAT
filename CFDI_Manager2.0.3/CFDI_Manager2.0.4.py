@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# Raven Developers by Grupo AISA - Versión Mejorada para CFDIs Vigentes y Cancelados
 import tkinter as tk
 from tkinter import ttk, filedialog, scrolledtext, messagebox
 import base64
@@ -160,7 +159,7 @@ class CFDIDownloaderGUI:
         self.clear_fields_btn.grid(row=1, column=1, padx=5, pady=5)
 
         # Etiqueta del desarrollador
-        ttk.Label(main_frame, text="Carlos Black - Versión 2.0.3").grid(row=11, column=0, columnspan=5, pady=10, sticky=tk.W)
+        ttk.Label(main_frame, text="Carlos Black - Versión 2.0.4").grid(row=11, column=0, columnspan=5, pady=10, sticky=tk.W)
 
         # Inicializar estado de la interfaz
         self.on_download_type_change()
@@ -195,18 +194,6 @@ class CFDIDownloaderGUI:
             )
 
     def get_estado_comprobante(self):
-        """Obtiene el estado del comprobante según selección del usuario
-
-        NOTA (actualización a cfdiclient 1.6.3): la documentación oficial ahora
-        describe 'estado_comprobante' como un único parámetro string (por
-        defecto 'Vigente') tanto para SolicitaDescargaEmitidos como para
-        SolicitaDescargaRecibidos, sin distinguir tipos por clase. Este código
-        sigue enviando enteros (None/1/0) para Emitidos, que es como
-        funcionaba en versiones previas. Verifica con una prueba real que el
-        SAT siga aceptando estos valores; si el SAT rechaza la solicitud,
-        prueba cambiando el mapping de Emitidos a strings
-        ('Todos'/'Vigente'/'Cancelado') igual que Recibidos.
-        """
         tipo_descarga = self.download_type_combobox.get()
         estado_texto = self.cfdi_status_combobox.get()
         
