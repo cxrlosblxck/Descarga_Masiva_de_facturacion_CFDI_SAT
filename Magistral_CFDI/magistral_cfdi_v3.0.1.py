@@ -1,4 +1,4 @@
-# magistral_cfdi_v3.py
+# magistral_cfdi_v3.0.1
 import sys
 import os
 import base64
@@ -16,9 +16,14 @@ from PyQt6.QtCore import QDate, Qt, QThread, pyqtSignal, QSize
 from PyQt6.QtGui import QIcon, QFont, QColor, QPalette, QPixmap
 
 # Importaciones de cfdiclient 
-from cfdiclient import Autenticacion, DescargaMasiva, Fiel, VerificaSolicitudDescarga
-from cfdiclient.solicitadescargaEmitidos import SolicitaDescargaEmitidos
-from cfdiclient.solicitadescargaRecibidos import SolicitaDescargaRecibidos
+from cfdiclient import (
+    Autenticacion,
+    DescargaMasiva,
+    Fiel,
+    SolicitaDescargaEmitidos,
+    SolicitaDescargaRecibidos,
+    VerificaSolicitudDescarga,
+)
 # 
 def resource_path(relative_path):
     """Obtener la ruta absoluta al recurso, funciona para dev y para PyInstaller"""
@@ -33,6 +38,13 @@ ESTADO_EMITIDOS = {
     "Solo Vigentes":    1,
     "Solo Cancelados":  0,
 }
+# NOTA (actualización a cfdiclient 1.6.3): la documentación oficial ahora
+# describe 'estado_comprobante' como un único parámetro string (por defecto
+# 'Vigente'), sin distinguir explícitamente el tipo por clase. Este mapping
+# sigue enviando enteros (None/1/0) para Emitidos como en versiones previas.
+# Verifica con una prueba real que el SAT lo siga aceptando; si el SAT
+# rechaza la solicitud, prueba cambiándolo a strings como en
+# ESTADO_RECIBIDOS_METADATA.
 
 ESTADO_RECIBIDOS_METADATA = {
     "Todos":            "Todos",
@@ -155,7 +167,8 @@ class DescargaWorker(QThread):
             tipo_solicitud   = self.config['formato']     # 'CFDI' | 'Metadata'
             estado_comprobante = self.config['estado']    # valor ya mapeado correctamente
             fecha_inicial    = datetime.datetime.strptime(self.config['fecha_inicio'], '%Y-%m-%d').date()
-            fecha_final      = datetime.datetime.strptime(self.config['fecha_fin'],    '%Y-%m-%d').date()
+            fecha_final      = datetime.datetime.strptime(self.config['fecha_fin'],    '%Y-%m-%d')
+            fecha_final      = fecha_final.replace(hour=23, minute=59, second=59)
 
             logging.info(f"RFC: {rfc}")
             logging.info(f"Tipo: {tipo_descarga}")
@@ -187,10 +200,10 @@ class DescargaWorker(QThread):
                 logging.info("Solicitando CFDIs Emitidos")
                 descarga = SolicitaDescargaEmitidos(self.fiel)
                 solicitud = descarga.solicitar_descarga(
-                    token,
-                    rfc,
-                    fecha_inicial,
-                    fecha_final,
+                    token=token,
+                    rfc_solicitante=rfc,
+                    fecha_inicial=fecha_inicial,
+                    fecha_final=fecha_final,
                     rfc_emisor=rfc,
                     tipo_solicitud=tipo_solicitud,          # 'CFDI'
                     estado_comprobante=estado_comprobante,  # None | 0 | 1
@@ -201,10 +214,10 @@ class DescargaWorker(QThread):
                 logging.info("Solicitando CFDIs Recibidos")
                 descarga = SolicitaDescargaRecibidos(self.fiel)
                 solicitud = descarga.solicitar_descarga(
-                    token,
-                    rfc,
-                    fecha_inicial,
-                    fecha_final,
+                    token=token,
+                    rfc_solicitante=rfc,
+                    fecha_inicial=fecha_inicial,
+                    fecha_final=fecha_final,
                     rfc_receptor=rfc,
                     tipo_solicitud=tipo_solicitud,          # 'CFDI' o 'Metadata'
                     estado_comprobante=estado_comprobante,  # 'Vigente' | 'Cancelado' | 'Todos'
@@ -247,6 +260,8 @@ class DescargaWorker(QThread):
                             time.sleep(10)
 
                     verificacion_obj = VerificaSolicitudDescarga(self.fiel)
+                    if hasattr(verificacion_obj, 'timeout'):
+                        verificacion_obj.timeout = 90  # antes sin timeout explícito
                     verificacion     = verificacion_obj.verificar_descarga(token, rfc, solicitud['id_solicitud'])
                     estado_solicitud = int(verificacion['estado_solicitud'])
 
@@ -309,13 +324,18 @@ class DescargaWorker(QThread):
                     if 'timeout' in error_msg.lower():
                         self.progreso.emit(f" Timeout en intento {attempt_count + 1}")
                         attempt_count += 1
-                        if attempt_count < 5:
-                            wait_time = min(30 * attempt_count, 90)
-                            self.progreso.emit(f" Reintentando en {wait_time}s...")
+                        MAX_TIMEOUT_RETRIES = 12  # antes 5; el SAT puede tardar en responder
+                        if attempt_count < MAX_TIMEOUT_RETRIES:
+                            wait_time = min(30 * attempt_count, 120)
+                            self.progreso.emit(f" Reintentando en {wait_time}s... ({attempt_count}/{MAX_TIMEOUT_RETRIES})")
                             time.sleep(wait_time)
                             continue
                         else:
-                            self.error.emit("Máximo de reintentos alcanzado")
+                            self.error.emit(
+                                f"Máximo de reintentos alcanzado al VERIFICAR. "
+                                f"La solicitud SÍ fue creada (id_solicitud: {solicitud['id_solicitud']}); "
+                                "guárdalo y vuelve a consultar más tarde sin volver a pedirla."
+                            )
                             break
                     else:
                         self.error.emit(f"Error: {error_msg}")
